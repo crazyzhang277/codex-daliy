@@ -1,0 +1,8 @@
+nvidialimiter.exe
+*.exe~
+*.log
+*.tmp
+*.out
+*.test
+coverage.out
+bin/

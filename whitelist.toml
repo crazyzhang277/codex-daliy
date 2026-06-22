@@ -1,0 +1,6 @@
+enabled = true
+match_mode = "mixed"
+
+models = [
+  "nvidia/"
+]
