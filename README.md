@@ -1,10 +1,10 @@
 # Nvidia Rate Limiter
 
-一个运行在本机的 NVIDIA Responses API 代理与限流器。
+一款运行在本机的 NVIDIA Responses API 代理和限流器。
 
-它会监听 `127.0.0.1:57321`，把请求转发到上游接口，并且对命中的 NVIDIA 模型做节流控制。
+它会监听 `127.0.0.1:57321`，把请求转发到上游接口，并且只对命中的 NVIDIA 模型做节流控制。
 
-## 功能
+## 一眼看懂
 
 - 代理转发 Responses API 请求
 - 按模型白名单判断是否限流
@@ -13,20 +13,35 @@
 - 支持通过 `UPSTREAM_BASE_URL` 切换上游地址
 - 自动读取同目录下的 `whitelist.toml`
 
-## 运行方式
+## 工作原理
 
-把 `nvidialimiter.exe` 和 `whitelist.toml` 放在同一个目录里，然后直接运行：
+```mermaid
+flowchart LR
+  A["客户端请求"] --> B["本地代理 127.0.0.1:57321"]
+  B --> C{"请求体是否包含 model"}
+  C -- 否 --> D["直接转发到上游"]
+  C -- 是 --> E{"命中 whitelist.toml"}
+  E -- 否 --> D
+  E -- 是 --> F["等待 2 秒冷却"]
+  F --> D
+  D --> G["NVIDIA Responses API"]
+```
+
+## 快速开始
+
+1. 把 `nvidialimiter.exe` 和 `whitelist.toml` 放在同一个目录。
+2. 直接运行程序。
 
 ```powershell
 .\nvidialimiter.exe
 ```
 
-程序默认会：
+默认行为：
 
-- 监听 `127.0.0.1:57321`
-- 将请求转发到 `https://integrate.api.nvidia.com/v1`
+- 监听：`127.0.0.1:57321`
+- 上游：`https://integrate.api.nvidia.com/v1`
 
-如果你要改上游地址，可以设置环境变量：
+如果你要改上游地址：
 
 ```powershell
 $env:UPSTREAM_BASE_URL = "http://127.0.0.1:8000"
@@ -35,7 +50,7 @@ $env:UPSTREAM_BASE_URL = "http://127.0.0.1:8000"
 
 ## 安装为开机启动
 
-在 Windows 上可以使用计划任务：
+Windows 下可以使用计划任务注册开机启动：
 
 ```powershell
 .\nvidialimiter.exe install
@@ -62,11 +77,11 @@ models = [
 ]
 ```
 
-### 配置说明
+### 配置项说明
 
 - `enabled`
-  - `true` 表示开启限流
-  - `false` 表示关闭限流
+  - `true`：开启限流
+  - `false`：关闭限流
 - `match_mode`
   - `mixed`：精确匹配或前缀匹配
   - `prefix`：只做前缀匹配
@@ -74,7 +89,7 @@ models = [
 - `models`
   - 需要限流的模型列表
 
-## 请求规则
+### 命中规则
 
 只有当请求体里包含 `model` 字段，并且该模型命中白名单时，程序才会进行节流。
 
@@ -87,21 +102,20 @@ models = [
 }
 ```
 
-## 本地测试
+## 开发与验证
 
-可以运行：
+本地可以这样检查：
 
 ```powershell
 go test ./...
 go build .
 ```
 
-## 仓库信息
+## 推荐仓库信息
 
-- 项目名称建议：`Nvidia Rate Limiter`
-- 适合的简介：`一个本地运行的 NVIDIA Responses API 代理和限流器`
+- 项目简介：`一个本地运行的 NVIDIA Responses API 代理和限流器`
 - 推荐 topics：`go`, `proxy`, `rate-limit`, `nvidia`, `responses-api`, `windows`
 
 ## 许可证
 
-本项目使用 MIT License。
+MIT License
