@@ -10,6 +10,8 @@
 - 按模型白名单判断是否限流
 - 默认对命中的请求添加 `2 秒` 冷却
 - 支持 `install` / `uninstall` 命令注册为 Windows 计划任务
+- 支持通过 `UPSTREAM_BASE_URL` 切换上游地址
+- 自动读取同目录下的 `whitelist.toml`
 
 ## 运行方式
 
@@ -94,6 +96,12 @@ go test ./...
 go build .
 ```
 
+## 仓库信息
+
+- 项目名称建议：`Nvidia Rate Limiter`
+- 适合的简介：`一个本地运行的 NVIDIA Responses API 代理和限流器`
+- 推荐 topics：`go`, `proxy`, `rate-limit`, `nvidia`, `responses-api`, `windows`
+
 ## 许可证
 
-当前仓库未单独声明许可证。
+本项目使用 MIT License。
