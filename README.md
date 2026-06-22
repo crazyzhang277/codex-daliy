@@ -1,6 +1,6 @@
-# Nvidia Rate Limiter
+# Nvidia Rate Limiter ⚡
 
-一款运行在本机的 NVIDIA Responses API 代理和限流器。
+一款运行在本机的 NVIDIA Responses API 代理和限流器 🔧
 
 它会监听 `127.0.0.1:57321`，把请求转发到上游接口，并且只对命中的 NVIDIA 模型做节流控制。
 
@@ -27,7 +27,7 @@ flowchart LR
   D --> G["NVIDIA Responses API"]
 ```
 
-## 快速开始
+## 快速开始 🚀
 
 1. 把 `nvidialimiter.exe` 和 `whitelist.toml` 放在同一个目录。
 2. 直接运行程序。
@@ -48,7 +48,7 @@ $env:UPSTREAM_BASE_URL = "http://127.0.0.1:8000"
 .\nvidialimiter.exe
 ```
 
-## 安装为开机启动
+## 安装为开机启动 🪟
 
 Windows 下可以使用计划任务注册开机启动：
 
@@ -62,7 +62,7 @@ Windows 下可以使用计划任务注册开机启动：
 .\nvidialimiter.exe uninstall
 ```
 
-## 配置文件
+## 配置文件 📄
 
 程序会读取同目录下的 `whitelist.toml`。
 
@@ -102,7 +102,7 @@ models = [
 }
 ```
 
-## 开发与验证
+## 开发与验证 🧪
 
 本地可以这样检查：
 
@@ -111,7 +111,7 @@ go test ./...
 go build .
 ```
 
-## 推荐仓库信息
+## 推荐仓库信息 🏷️
 
 - 项目简介：`一个本地运行的 NVIDIA Responses API 代理和限流器`
 - 推荐 topics：`go`, `proxy`, `rate-limit`, `nvidia`, `responses-api`, `windows`
