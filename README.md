@@ -55,6 +55,8 @@ flowchart TD
 
 把 `nvidialimiter.exe` 和 `whitelist.toml` 放在同一个目录里。
 
+如果你不想自己编译，可以直接去 GitHub 仓库的 `Releases` 页面下载已经打包好的 Windows 可执行文件。
+
 ### 第 2 步：启动程序
 
 ```powershell
