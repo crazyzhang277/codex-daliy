@@ -33,6 +33,22 @@ flowchart LR
   D --> G["NVIDIA Responses API"]
 ```
 
+## 使用流程图
+
+```mermaid
+flowchart TD
+  A["下载或编译程序"] --> B["把 exe 和 whitelist.toml 放同一目录"]
+  B --> C["启动 nvidialimiter.exe"]
+  C --> D["查看本地监听端口"]
+  D --> E["把客户端指向本地代理"]
+  E --> F["发送请求"]
+  F --> G{"模型是否命中白名单"}
+  G -- 否 --> H["直接转发"]
+  G -- 是 --> I["按规则节流"]
+  I --> H
+  H --> J["返回结果"]
+```
+
 ## 快速开始 🚀
 
 ### 第 1 步：准备文件
@@ -111,6 +127,27 @@ $env:UPSTREAM_BASE_URL = "http://127.0.0.1:8000"
 ## 配置文件 📄
 
 程序会读取同目录下的 `whitelist.toml`。
+
+### 配置示例模板
+
+你可以直接复制下面这份作为起点，再按自己的模型名修改：
+
+```toml
+# 是否启用限流
+enabled = true
+
+# 匹配模式：
+# mixed  = 精确匹配或前缀匹配
+# prefix = 只做前缀匹配
+# exact  = 只做精确匹配
+match_mode = "mixed"
+
+# 需要限流的模型列表
+models = [
+  "nvidia/",
+  "nvidia/llama-3.1-nemotron-70b-instruct",
+]
+```
 
 示例：
 
